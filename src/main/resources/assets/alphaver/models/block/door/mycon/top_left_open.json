@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/door/top_left_open",
+  "textures": {
+    "top": "alphaver:block/mycon_door_upper"
+  }
+}

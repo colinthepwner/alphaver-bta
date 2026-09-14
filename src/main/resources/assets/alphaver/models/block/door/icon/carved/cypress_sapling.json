@@ -1,0 +1,16 @@
+{
+  "textures": {
+    "particle": "alphaver:block/door_icon/carved/cypress_sapling",
+    "icon": "alphaver:block/door_icon/carved/cypress_sapling"
+  },
+  "elements": [
+    {
+      "from": [6.4, 4, 4],
+      "to": [9.6, 12, 12],
+      "faces": {
+        "west": {"uv": [0, 0, 16, 16], "texture": "#icon"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#icon"}
+      }
+    }
+  ]
+}

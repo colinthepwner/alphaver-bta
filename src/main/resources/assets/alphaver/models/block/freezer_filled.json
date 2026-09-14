@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "alphaver:block/freezer_top",
+    "bottom": "alphaver:block/freezer_top",
+    "front": "alphaver:block/freezer_front",
+    "side": "alphaver:block/freezer_side"
+  }
+}

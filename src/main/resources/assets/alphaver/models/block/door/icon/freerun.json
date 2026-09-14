@@ -1,0 +1,16 @@
+{
+  "textures": {
+    "particle": "alphaver:block/door_icon/freerun",
+    "icon": "alphaver:block/door_icon/freerun"
+  },
+  "elements": [
+    {
+      "from": [-0.1, 4, 4],
+      "to": [3.1, 12, 12],
+      "faces": {
+        "west": {"uv": [0, 0, 16, 16], "texture": "#icon"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#icon"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "textures": {
+    "particle": "alphaver:block/door_icon/carved/zombies_west",
+    "icon_west": "alphaver:block/door_icon/carved/zombies_west",
+    "icon_east": "alphaver:block/door_icon/carved/zombies_east"
+  },
+  "elements": [
+    {
+      "from": [-0.1, 4, 4],
+      "to": [3.1, 12, 12],
+      "faces": {
+        "west": {"uv": [0, 0, 16, 16], "texture": "#icon_west"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#icon_east"}
+      }
+    }
+  ]
+}

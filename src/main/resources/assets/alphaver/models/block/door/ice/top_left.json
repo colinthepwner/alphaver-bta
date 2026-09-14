@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/door/top_left",
+  "textures": {
+    "top": "alphaver:block/ice_door_upper"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/door/top_right_open",
+  "textures": {
+    "top": "alphaver:block/highwood_door_upper"
+  }
+}

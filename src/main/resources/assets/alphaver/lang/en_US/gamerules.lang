@@ -1,0 +1,2 @@
+gamerule.allow_foreign_mobs_in_cypress.name=Foreign Mobs in Cypress
+gamerule.allow_foreign_mobs_in_cypress.desc=Whether mobs from other mods can spawn and live in the Cypress dimension. Turning it off removes any already there. AlphaVer's other dimensions always keep them out.

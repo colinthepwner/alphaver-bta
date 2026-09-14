@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/door/bottom_left",
+  "textures": {
+    "bottom": "alphaver:block/mycon_door_lower"
+  }
+}

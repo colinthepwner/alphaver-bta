@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "alphaver",
+  "version": "${version}",
+
+  "name": "AlphaVer",
+  "description": "Experience EXT 16.05_20 (Cypress) in BTA.",
+  "authors": [
+    "ModLoader by Risugami",
+    "GLSL Shader support by daxnitro",
+    "Mojang Studios",
+    "Google Inc.",
+    "colinthepwner (Port)"
+  ],
+  "icon": "icon.png",
+
+  "environment": "*",
+
+  "entrypoints": {
+    "main": ["com.alphaver.AlphaVer"],
+    "client": ["com.alphaver.AlphaVerClient"]
+  },
+
+  "mixins": ["alphaver.mixins.json"],
+
+  "depends": {
+    "fabricloader": ">=${fabricloader}",
+    "halplibe": ">=${halplibe}",
+    "minecraft": "*",
+    "java": ">=${java}"
+  },
+  "suggests": {
+    "modmenu": ">=${modmenu}"
+  }
+}

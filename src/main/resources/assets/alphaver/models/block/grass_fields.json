@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "alphaver:block/grass_fields_top",
+    "bottom": "minecraft:block/grass_retro/bottom",
+    "side": "alphaver:block/grass_fields_side"
+  }
+}

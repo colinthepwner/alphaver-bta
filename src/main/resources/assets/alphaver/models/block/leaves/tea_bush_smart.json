@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves/leaves_smart",
+  "textures": {
+    "all": "alphaver:block/tea_bush"
+  }
+}

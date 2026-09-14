@@ -1,0 +1,16 @@
+{
+  "textures": {
+    "particle": "minecraft:block/sapling/oak",
+    "icon": "minecraft:block/sapling/oak"
+  },
+  "elements": [
+    {
+      "from": [6.4, 4, 4],
+      "to": [9.6, 12, 12],
+      "faces": {
+        "west": {"uv": [0, 0, 16, 16], "texture": "#icon"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#icon"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+    "model_paths": [
+        "/assets/alphaver/models/entity/observer.json",
+        "/assets/alphaver/models/entity/amoung.json",
+        "/assets/alphaver/models/entity/catbomb.json",
+        "/assets/alphaver/models/entity/squib.json",
+        "/assets/alphaver/models/entity/pongormatron.json"
+    ]
+}
