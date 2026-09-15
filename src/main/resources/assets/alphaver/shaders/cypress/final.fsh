@@ -14,6 +14,10 @@ uniform float lastMouseDist;
 uniform float playerPitchRot;
 uniform float fovMod;
 
+uniform bool depthOfField;
+uniform bool motionBlur;
+uniform bool reflection;
+
 const float HYPERFOCAL = 4.0;
 const float SSR_MAX_Y = 16.0;
 const float INFINITY = 100000.0;
@@ -133,37 +137,43 @@ float genrng(vec2 co) {
 void main() {
 	vec4 baseColor = texture(sceneColor, TexCoords);
 
-	float weight = focusBlur(getDepth(TexCoords), getCursorDepth(vec2(0.5, 0.5)));
-	if (weight > 0.0) {
-		baseColor = mix(baseColor, getBlurredColor(), weight);
+	if (depthOfField) {
+		float weight = focusBlur(getDepth(TexCoords), getCursorDepth(vec2(0.5, 0.5)));
+		if (weight > 0.0) {
+			baseColor = mix(baseColor, getBlurredColor(), weight);
+		}
 	}
 
-	float mouseDist = clamp(lastMouseDist / 60.0, 0.0, 1.0);
-	baseColor = mix(baseColor, sblur(TexCoords, mouseDist * 1.5), 0.3 + mouseDist * 0.7);
-
-	float plus40Point = 0.22;
-	float zeroPoint = 0.40;
-	float minus40Point = 0.79;
-	float pixelsOffset = zeroPoint;
-	if (fovMod > 0.5) {
-		pixelsOffset -= (zeroPoint - plus40Point) * ((fovMod - 0.5) / 0.5);
+	if (motionBlur) {
+		float mouseDist = clamp(lastMouseDist / 60.0, 0.0, 1.0);
+		baseColor = mix(baseColor, sblur(TexCoords, mouseDist * 1.5), 0.3 + mouseDist * 0.7);
 	}
-	if (fovMod < 0.5) {
-		pixelsOffset += (minus40Point - zeroPoint) * pow(1.0 - fovMod / 0.5, 4.0);
-	}
-	float offsetY = playerPitchRot / SSR_MAX_Y * pixelsOffset;
 
-	if (baseColor.z > baseColor.x && baseColor.z > baseColor.y) {
-		vec2 drawVec = TexCoords - vec2(0.001 - genrng(TexCoords * rand) * 0.002, offsetY);
+	if (reflection) {
+		float plus40Point = 0.22;
+		float zeroPoint = 0.40;
+		float minus40Point = 0.79;
+		float pixelsOffset = zeroPoint;
+		if (fovMod > 0.5) {
+			pixelsOffset -= (zeroPoint - plus40Point) * ((fovMod - 0.5) / 0.5);
+		}
+		if (fovMod < 0.5) {
+			pixelsOffset += (minus40Point - zeroPoint) * pow(1.0 - fovMod / 0.5, 4.0);
+		}
+		float offsetY = playerPitchRot / SSR_MAX_Y * pixelsOffset;
 
-		if (drawVec.y < 0.5) {
-			float a = 1.0;
-			if (TexCoords.y > 0.5) {
-				a = 1.0 - abs(TexCoords.y - 0.5) / offsetY;
+		if (baseColor.z > baseColor.x && baseColor.z > baseColor.y) {
+			vec2 drawVec = TexCoords - vec2(0.001 - genrng(TexCoords * rand) * 0.002, offsetY);
+
+			if (drawVec.y < 0.5) {
+				float a = 1.0;
+				if (TexCoords.y > 0.5) {
+					a = 1.0 - abs(TexCoords.y - 0.5) / offsetY;
+				}
+				float strength = clamp(baseColor.z * baseColor.z, 0.0, 0.1) / 0.1 * 0.4
+					* (1.0 - clamp(abs(playerPitchRot / SSR_MAX_Y), 0.0, 1.0)) * a;
+				baseColor = mix(baseColor, texture(sceneColor, vec2(drawVec.x, -drawVec.y)), strength);
 			}
-			float strength = clamp(baseColor.z * baseColor.z, 0.0, 0.1) / 0.1 * 0.4
-				* (1.0 - clamp(abs(playerPitchRot / SSR_MAX_Y), 0.0, 1.0)) * a;
-			baseColor = mix(baseColor, texture(sceneColor, vec2(drawVec.x, -drawVec.y)), strength);
 		}
 	}
 

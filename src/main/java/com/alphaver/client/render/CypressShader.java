@@ -1,5 +1,6 @@
 package com.alphaver.client.render;
 
+import com.alphaver.AVConfig;
 import com.alphaver.AlphaVer;
 import com.alphaver.world.AVWorlds;
 import net.fabricmc.api.EnvType;
@@ -67,7 +68,7 @@ public final class CypressShader {
 	@Nullable
 	public static FrameBufferAttachment run(@Nullable FrameBuffer world) {
 		Minecraft mc = Minecraft.getMinecraft();
-		if (world == null || mc.thePlayer == null || !AVWorlds.isCypress(mc.currentWorld)
+		if (!anyEffect() || world == null || mc.thePlayer == null || !AVWorlds.isCypress(mc.currentWorld)
 			|| mc.currentScreen instanceof ScreenPhotoMode) {
 			lastPassNanos = 0L;
 			return null;
@@ -118,6 +119,13 @@ public final class CypressShader {
 		PROGRAM.uniformFloat("playerPitchRot", mc.thePlayer.xRot);
 		float fovDegrees = (int) (GameSettings.FOV.value * 100.0 + 30.0);
 		PROGRAM.uniformFloat("fovMod", (fovDegrees - 70.0F) / 80.0F + 0.5F);
+		PROGRAM.uniformBool("depthOfField", AVConfig.SHADER_DEPTH_OF_FIELD);
+		PROGRAM.uniformBool("motionBlur", AVConfig.SHADER_MOTION_BLUR);
+		PROGRAM.uniformBool("reflection", AVConfig.SHADER_REFLECTION);
+	}
+
+	private static boolean anyEffect() {
+		return AVConfig.SHADER_DEPTH_OF_FIELD || AVConfig.SHADER_MOTION_BLUR || AVConfig.SHADER_REFLECTION;
 	}
 
 	private static float mouseDistance(Minecraft mc) {

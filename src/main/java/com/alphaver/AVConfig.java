@@ -70,6 +70,12 @@ public final class AVConfig {
 
 	public static boolean TEXTURE_FILTER = false;
 
+	public static boolean SHADER_DEPTH_OF_FIELD = false;
+
+	public static boolean SHADER_MOTION_BLUR = false;
+
+	public static boolean SHADER_REFLECTION = false;
+
 	public static String CYPRESS_SOURCE = "";
 
 	@SuppressWarnings({"java:S899", "ResultOfMethodCallIgnored"})
@@ -119,6 +125,9 @@ public final class AVConfig {
 		MUSIC = cfgGetValueOrDefault(CLIENT_CATEGORY + ".MUSIC", MUSIC);
 		COLORED_LIGHT = cfgGetValueOrDefault(CLIENT_CATEGORY + ".COLORED_LIGHT", COLORED_LIGHT);
 		TEXTURE_FILTER = cfgGetValueOrDefault(CLIENT_CATEGORY + ".TEXTURE_FILTER", TEXTURE_FILTER);
+		SHADER_DEPTH_OF_FIELD = cfgGetValueOrDefault(CLIENT_CATEGORY + ".SHADER_DEPTH_OF_FIELD", SHADER_DEPTH_OF_FIELD);
+		SHADER_MOTION_BLUR = cfgGetValueOrDefault(CLIENT_CATEGORY + ".SHADER_MOTION_BLUR", SHADER_MOTION_BLUR);
+		SHADER_REFLECTION = cfgGetValueOrDefault(CLIENT_CATEGORY + ".SHADER_REFLECTION", SHADER_REFLECTION);
 		CYPRESS_SOURCE = cfgGetValueOrDefault(CLIENT_CATEGORY + ".CYPRESS_SOURCE", CYPRESS_SOURCE).trim();
 	}
 
@@ -236,6 +245,9 @@ public final class AVConfig {
 			.addEntry("COLORED_LIGHT", "Light from AlphaVer's glowing blocks takes their colour, in any lighting style.", COLORED_LIGHT)
 			.addEntry("TEXTURE_FILTER", "Cypress's smoothed (bilinear) texture filter while its look is on. No visuals pack Cypress shipped used it.",
 				TEXTURE_FILTER)
+			.addEntry("SHADER_DEPTH_OF_FIELD", "Cypress's shader depth of field, in the Cypress dimension.", SHADER_DEPTH_OF_FIELD)
+			.addEntry("SHADER_MOTION_BLUR", "Cypress's shader motion blur while turning, in the Cypress dimension.", SHADER_MOTION_BLUR)
+			.addEntry("SHADER_REFLECTION", "Cypress's shader mirror on water and sky, in the Cypress dimension.", SHADER_REFLECTION)
 			.addEntry("CYPRESS_SOURCE",
 				"Path to your copy of Cypress if it is not under the game directory. Empty searches the game directory.",
 				CYPRESS_SOURCE);
