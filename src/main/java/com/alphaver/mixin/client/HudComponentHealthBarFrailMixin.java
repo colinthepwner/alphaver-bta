@@ -17,7 +17,7 @@ public abstract class HudComponentHealthBarFrailMixin {
 	@Inject(method = "render(Lnet/minecraft/client/gui/hud/HudIngame;IIF)V", at = @At("HEAD"), cancellable = true)
 	private void alphaver$frailHeart(HudIngame hud, int xSizeScreen, int ySizeScreen, float partialTick, CallbackInfo ci) {
 		Minecraft mc = Minecraft.getMinecraft();
-		if (mc.thePlayer == null || !CypressFrail.active(mc.currentWorld)) {
+		if (mc.thePlayer == null || !CypressFrail.active(mc.currentWorld, mc.thePlayer)) {
 			return;
 		}
 		ci.cancel();

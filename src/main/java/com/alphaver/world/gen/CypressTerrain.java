@@ -244,6 +244,9 @@ public final class CypressTerrain {
 		double[] stoneNoise = this.noiseGen5.generateNoiseOctaves(null, chunkX * 16, chunkZ * 16, 0.0,
 			16, 16, 1, scale * 2.0, scale * 2.0, scale * 2.0);
 
+		double iceNoise = 0.0;
+		boolean iceSampled = false;
+
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 
@@ -267,8 +270,11 @@ public final class CypressTerrain {
 					if (y >= 95 + rand.nextInt(6) - 1 && blocks[index] != 0) {
 						blocks[index] = (short) this.idSnowBlock;
 
-						for (int ice = (int) (this.mobSpawnerNoise.generateNoiseOctaves(chunkX * 13.2, chunkZ * 13.2) / 2.0);
-						     ice > 0; ice--) {
+						if (!iceSampled) {
+							iceNoise = this.mobSpawnerNoise.generateNoiseOctaves(chunkX * 13.2, chunkZ * 13.2);
+							iceSampled = true;
+						}
+						for (int ice = (int) (iceNoise / 2.0); ice > 0; ice--) {
 							if (ice + y < HEIGHT && index + ice < blocks.length && blocks[index + ice] == 0) {
 								blocks[index + ice] = (short) this.idIce;
 							}

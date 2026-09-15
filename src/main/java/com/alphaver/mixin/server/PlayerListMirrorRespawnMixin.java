@@ -2,6 +2,8 @@ package com.alphaver.mixin.server;
 
 import com.alphaver.entity.AVInventoryStash;
 import com.alphaver.item.AVMirrorSpawnData;
+import com.alphaver.world.AVWorlds;
+import com.alphaver.world.travel.AVCypressHome;
 import com.alphaver.world.travel.AVRespawn;
 import com.alphaver.world.travel.AVTravel;
 import com.alphaver.world.travel.AVTravelData;
@@ -33,6 +35,7 @@ public abstract class PlayerListMirrorRespawnMixin {
 		if (previous instanceof AVTravelData oldInvite && oldInvite.alphaver$invited()) {
 			((AVTravelData) player).alphaver$setInvited(true);
 		}
+		AVCypressHome.carryOver(previous, player);
 		int[] door = AVRespawn.doorFor(previous.world, previous, false);
 		if (previous instanceof AVTravelData oldTravel && oldTravel.alphaver$hasReturn() && door == null) {
 			((AVTravelData) player).alphaver$setReturn(oldTravel.alphaver$returnX(), oldTravel.alphaver$returnY(), oldTravel.alphaver$returnZ());
@@ -55,11 +58,20 @@ public abstract class PlayerListMirrorRespawnMixin {
 		}
 
 		AVMirrorSpawnData spawn = (AVMirrorSpawnData) player;
-		if (!mirror || spawn.alphaver$mirrorDimension() != dimension || player.getPlayerSpawnPoint() != null) {
+		if (mirror && spawn.alphaver$mirrorDimension() == dimension && player.getPlayerSpawnPoint() == null) {
+			AVTravel.loadChunksAround(world, spawn.alphaver$mirrorX(), spawn.alphaver$mirrorZ());
+			alphaver$place(player, world, spawn.alphaver$mirrorX() + 0.5, spawn.alphaver$mirrorY() + 0.1, spawn.alphaver$mirrorZ() + 0.5);
 			return;
 		}
-		AVTravel.loadChunksAround(world, spawn.alphaver$mirrorX(), spawn.alphaver$mirrorZ());
-		alphaver$place(player, world, spawn.alphaver$mirrorX() + 0.5, spawn.alphaver$mirrorY() + 0.1, spawn.alphaver$mirrorZ() + 0.5);
+
+		if (AVCypressHome.active(world) && player.getPlayerSpawnPoint() == null) {
+			if (AVWorlds.isCypress(world)) {
+				int[] spot = AVCypressHome.landingInCypress(world, player);
+				alphaver$place(player, world, spot[0] + 0.5, spot[1] + 0.1, spot[2] + 0.5);
+			} else {
+				AVCypressHome.afterRespawnOutside(world, player);
+			}
+		}
 	}
 
 	@Unique

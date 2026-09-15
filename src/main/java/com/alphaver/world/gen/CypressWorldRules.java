@@ -27,7 +27,18 @@ public final class CypressWorldRules {
 			case "never":
 				return false;
 			default:
-				return new Random(seed ^ 0x6379707265737321L).nextInt(4) == 1;
+
+				SandAnswer memo = lastSand;
+				if (memo != null && memo.seed() == seed) {
+					return memo.sand();
+				}
+				boolean sand = new Random(seed ^ 0x6379707265737321L).nextInt(4) == 1;
+				lastSand = new SandAnswer(seed, sand);
+				return sand;
 		}
 	}
+
+	private record SandAnswer(long seed, boolean sand) {}
+
+	private static volatile SandAnswer lastSand;
 }

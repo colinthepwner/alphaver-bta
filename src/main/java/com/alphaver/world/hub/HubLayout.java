@@ -176,7 +176,21 @@ public final class HubLayout {
 		return found;
 	}
 
-	private synchronized Region region(int rx, int rz) {
+	private record RegionMemo(int rx, int rz, Region region) {}
+
+	private final ThreadLocal<RegionMemo> lastRegion = new ThreadLocal<>();
+
+	private Region region(int rx, int rz) {
+		RegionMemo memo = this.lastRegion.get();
+		if (memo != null && memo.rx() == rx && memo.rz() == rz) {
+			return memo.region();
+		}
+		Region region = this.sharedRegion(rx, rz);
+		this.lastRegion.set(new RegionMemo(rx, rz, region));
+		return region;
+	}
+
+	private synchronized Region sharedRegion(int rx, int rz) {
 		long regionKey = key(rx, rz);
 		Region region = this.regions.get(regionKey);
 		if (region == null) {

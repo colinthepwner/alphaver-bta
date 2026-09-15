@@ -16,9 +16,11 @@ public final class CypressFrail {
 
 	private static final int WEAR_PER_DAMAGE = 16;
 
-	public static boolean active(@Nullable World world) {
-
-		return AVConfig.FRAIL && AVWorlds.isAlphaVer(world) && !AVWorlds.isMinigame(world);
+	public static boolean active(@Nullable World world, @Nullable Player player) {
+		if (world == null || AVWorlds.isMinigame(world)) {
+			return false;
+		}
+		return AVGamemodes.isFrail(player) || AVConfig.FRAIL && AVWorlds.isAlphaVer(world);
 	}
 
 	public static boolean hurt(@NotNull Player player, @Nullable Entity attacker, int damage) {

@@ -80,8 +80,31 @@ public final class AVTravel {
 	}
 
 	private static void arriveInCypress(World world, Entity entity) {
-		int x = MathHelper.floor(entity.x);
-		int z = MathHelper.floor(entity.z);
+		AVTravelData home = entity instanceof Player && entity instanceof AVTravelData data && data.alphaver$homeTripPending() ? data : null;
+		int[] spot;
+		if (home != null && home.alphaver$hasHome()) {
+			spot = besideDoor(world, home.alphaver$homeX(), home.alphaver$homeY(), home.alphaver$homeZ());
+			buildDoorUnlessNear(world, spot[0], spot[1], spot[2]);
+		} else {
+			int x = MathHelper.floor(entity.x);
+			int z = MathHelper.floor(entity.z);
+			if (home != null) {
+				int[] ground = findLand(world, x, z);
+				x = ground[0];
+				z = ground[1];
+			}
+			spot = cypressLanding(world, x, z);
+		}
+		land(entity, spot[0] + 0.5, spot[1], spot[2] + 0.5, entity.yRot);
+		if (home != null) {
+			home.alphaver$setHomeTripPending(false);
+			if (!home.alphaver$hasHome()) {
+				home.alphaver$setHome(spot[0], spot[1], spot[2]);
+			}
+		}
+	}
+
+	static int[] cypressLanding(World world, int x, int z) {
 		loadAround(world, x, z);
 		int y;
 		int[] footing = findFooting(world, x, z);
@@ -96,14 +119,52 @@ public final class AVTravel {
 			world.setBlockWithNotify(x, y, z, 0);
 			world.setBlockWithNotify(x, y + 1, z, 0);
 		}
+		buildDoorUnlessNear(world, x, y, z);
+		return new int[]{x, y, z};
+	}
 
-		if (!doorNear(world, x, y, z)) {
-			groundUnder(world, x + 2, y, z, 0);
-			world.setBlockWithNotify(x + 2, y, z, 0);
-			world.setBlockWithNotify(x + 2, y + 1, z, 0);
-			AVHubDoors.place(world, x + 2, y, z, true, true);
+	private static void buildDoorUnlessNear(World world, int x, int y, int z) {
+		if (doorNear(world, x, y, z)) {
+			return;
 		}
-		land(entity, x + 0.5, y, z + 0.5, entity.yRot);
+		groundUnder(world, x + 2, y, z, 0);
+		world.setBlockWithNotify(x + 2, y, z, 0);
+		world.setBlockWithNotify(x + 2, y + 1, z, 0);
+		AVHubDoors.place(world, x + 2, y, z, true, true);
+	}
+
+	private static final int LAND_STEP = 48;
+	private static final int LAND_RINGS = 8;
+
+	private static int[] findLand(World world, int x, int z) {
+		for (int ring = 0; ring <= LAND_RINGS; ring++) {
+			for (int dx = -ring; dx <= ring; dx++) {
+				for (int dz = -ring; dz <= ring; dz++) {
+					if (Math.max(Math.abs(dx), Math.abs(dz)) != ring) {
+						continue;
+					}
+					int probeX = x + dx * LAND_STEP;
+					int probeZ = z + dz * LAND_STEP;
+					loadColumn(world, probeX, probeZ);
+					if (surfaceFooting(world, probeX, probeZ) >= 0) {
+						return new int[]{probeX, probeZ};
+					}
+				}
+			}
+		}
+		return new int[]{x, z};
+	}
+
+	private static void loadColumn(World world, int x, int z) {
+		int chunkX = Math.floorDiv(x, 16);
+		int chunkZ = Math.floorDiv(z, 16);
+		if (!EnvironmentHelper.isServerEnvironment()) {
+			world.getChunkProvider().setCurrentChunkOver(chunkX, chunkZ);
+		}
+		world.getChunkFromBlockCoords(x, z);
+		if (!world.getChunkProvider().isChunkLoaded(chunkX, chunkZ)) {
+			world.getChunkProvider().prepareChunk(new ChunkPos(chunkX, chunkZ), true);
+		}
 	}
 
 	private static void arriveHome(World world, Entity entity) {

@@ -25,9 +25,14 @@ public final class CypressSky {
 	public static final String MOON = "/assets/alphaver/textures/environment/moon.png";
 	public static final String MOON_NEBULA = "/assets/alphaver/textures/environment/moon_nebula.png";
 
-	private static final long RECHECK_MILLIS = 2000L;
 	private static final Map<String, Boolean> AVAILABLE = new HashMap<>();
-	private static long checkedAt;
+
+	private static volatile int packGeneration;
+	private static int checkedGeneration = -1;
+
+	public static void packsChanged() {
+		packGeneration++;
+	}
 
 	public static final int SKY_DAY_STANDARD = 0x88BBFF;
 
@@ -100,10 +105,10 @@ public final class CypressSky {
 	}
 
 	static boolean available(Minecraft mc, String path) {
-		long now = System.currentTimeMillis();
-		if (now - checkedAt > RECHECK_MILLIS) {
+		int generation = packGeneration;
+		if (generation != checkedGeneration) {
 			AVAILABLE.clear();
-			checkedAt = now;
+			checkedGeneration = generation;
 		}
 		Boolean known = AVAILABLE.get(path);
 		if (known == null) {

@@ -3,6 +3,7 @@ package com.alphaver;
 import com.alphaver.block.AVBlocks;
 import com.alphaver.block.machine.AVTileEntities;
 import com.alphaver.entity.AVEntities;
+import com.alphaver.entity.AVGamemodes;
 import com.alphaver.item.AVItems;
 import com.alphaver.net.AVNetwork;
 import com.alphaver.net.AVSounds;
@@ -29,6 +30,8 @@ public class AlphaVer implements ModInitializer {
 		AVConfig.init();
 
 		AVGameRules.register();
+
+		AVGamemodes.register();
 
 		AVNetwork.registerMessages();
 		CommonEvents.BEFORE_GAME_START.listen(Key.of(MOD_ID), this::beforeGameStart);

@@ -44,14 +44,29 @@ public class BiomeProviderCypress extends BiomeProvider {
 			biomes = new Biome[xSize * ySize * zSize];
 		}
 
+		Biome[] chunkBiomes = new Biome[CypressBiomeKind.Layer.values().length];
+		int lastChunkX = 0;
+		int lastChunkZ = 0;
+		boolean haveChunk = false;
+
 		for (int xx = 0; xx < xSize; xx++) {
 			for (int zz = 0; zz < zSize; zz++) {
 				int chunkX = (x + xx) >> 4;
 				int chunkZ = (z + zz) >> 4;
+				if (!haveChunk || chunkX != lastChunkX || chunkZ != lastChunkZ) {
+					Arrays.fill(chunkBiomes, null);
+					lastChunkX = chunkX;
+					lastChunkZ = chunkZ;
+					haveChunk = true;
+				}
 				for (int yy = 0; yy < ySize; yy++) {
 
 					CypressBiomeKind.Layer layer = layerAt(y + yy * 8);
-					Biome biome = CypressBiomes.forLayer(layer, this.layers.chunkWinner(chunkX, chunkZ, layer));
+					Biome biome = chunkBiomes[layer.ordinal()];
+					if (biome == null) {
+						biome = CypressBiomes.forLayer(layer, this.layers.chunkWinner(chunkX, chunkZ, layer));
+						chunkBiomes[layer.ordinal()] = biome;
+					}
 					biomes[yy * xSize * zSize + zz * xSize + xx] = biome;
 				}
 			}

@@ -6,6 +6,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.option.GameSettings;
 import net.minecraft.client.option.OptionBoolean;
+import net.minecraft.core.world.World;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public final class AVFlatLighting {
@@ -18,8 +20,18 @@ public final class AVFlatLighting {
 		return option.value;
 	}
 
+	private record Answer(@Nullable World world, boolean flat) {}
+
+	private static volatile Answer last = new Answer(null, false);
+
 	private static boolean forced() {
 		Minecraft mc = Minecraft.getMinecraft();
-		return mc != null && AVWorlds.isAlphaVer(mc.currentWorld);
+		World world = mc == null ? null : mc.currentWorld;
+		Answer answer = last;
+		if (answer.world() != world) {
+			answer = new Answer(world, AVWorlds.isAlphaVer(world));
+			last = answer;
+		}
+		return answer.flat();
 	}
 }

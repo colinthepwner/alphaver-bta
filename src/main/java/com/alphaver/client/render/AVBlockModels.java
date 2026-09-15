@@ -153,7 +153,8 @@ public final class AVBlockModels {
 
 		dispatcher.addDispatch(new BlockModelCypressDoorLower<>(AVBlocks.CYPRESS_DOOR_LOWER, true)
 			.withTextures(AVTextures.block("cypress_door_lower", V_DOOR_BOTTOM)));
-		dispatcher.addDispatch(transparent(AVBlocks.CYPRESS_DOOR_UPPER, true, "cypress_door_upper", V_DOOR_TOP));
+		dispatcher.addDispatch(new BlockModelCypressDoorUpper<>(AVBlocks.CYPRESS_DOOR_UPPER, true)
+			.withTextures(AVTextures.block("cypress_door_upper", V_DOOR_TOP)));
 
 		dispatcher.addDispatch(new BlockModelMinigameDoor<>(AVBlocks.ZOMBIES_DOOR, "zombies", "alphaver:block/door/icon/zombies",
 			"alphaver:block/door/icon/zombies_cypress", "alphaver:block/door_icon/zombies_cypress"));

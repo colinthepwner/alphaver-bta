@@ -7,6 +7,7 @@ import com.alphaver.client.gui.HudComponentLilypadHunger;
 import com.alphaver.client.gui.HudComponentZombies;
 import com.alphaver.client.render.AVParticles;
 import com.alphaver.client.render.AVPaintingTextures;
+import com.alphaver.client.render.CypressSky;
 import net.minecraft.client.render.texturepack.TexturePackList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +18,11 @@ import java.io.File;
 
 @Mixin(value = TexturePackList.class, remap = false)
 public abstract class TexturePackListSidecarMixin {
+
+	@Inject(method = "refresh", at = @At("TAIL"))
+	private void alphaver$packsRefreshed(CallbackInfo ci) {
+		CypressSky.packsChanged();
+	}
 
 	@Inject(method = "init", at = @At("TAIL"))
 	private void alphaver$runSidecar(CallbackInfo ci) {

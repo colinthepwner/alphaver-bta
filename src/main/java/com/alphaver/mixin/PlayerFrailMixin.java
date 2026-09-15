@@ -17,7 +17,7 @@ public abstract class PlayerFrailMixin {
 		at = @At("HEAD"), cancellable = true)
 	private void alphaver$frail(Entity attacker, int damage, DamageType type, CallbackInfoReturnable<Boolean> cir) {
 		Player player = (Player) (Object) this;
-		if (damage <= 0 || player.world.isClientSide || !CypressFrail.active(player.world)) {
+		if (damage <= 0 || player.world.isClientSide || !CypressFrail.active(player.world, player)) {
 			return;
 		}
 		if (player.getHealth() <= 0 || player.getGamemode().hasInvulnerablePlayer()) {

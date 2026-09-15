@@ -21,7 +21,8 @@ public final class AVRespawn {
 	}
 
 	public static boolean leavesDimension(@Nullable World deathWorld, @Nullable Player player, boolean mirrorCanHold) {
-		if (deathWorld == null || player == null || !AVWorlds.isAlphaVer(deathWorld)) {
+
+		if (deathWorld == null || player == null || !AVWorlds.isAlphaVer(deathWorld) || AVCypressHome.active(deathWorld)) {
 			return false;
 		}
 		return !(mirrorCanHold && player instanceof AVMirrorSpawnData mirror && mirror.alphaver$hasMirrorSpawn()

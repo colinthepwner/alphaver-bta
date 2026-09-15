@@ -15,6 +15,10 @@ public final class CypressBiomeLayers {
 	private final long[] cacheKeys = new long[CACHE_SIZE];
 	private final short[] cacheValues = new short[CACHE_SIZE];
 
+	private static final int COLUMN_CACHE_SIZE = 4096;
+
+	private final ThreadLocal<ColumnCache> columnCache = ThreadLocal.withInitial(ColumnCache::new);
+
 	public CypressBiomeLayers(long seed, boolean noBiomes) {
 		Random random = new Random(seed);
 		for (int layer = 0; layer < 3; layer++) {
@@ -38,6 +42,25 @@ public final class CypressBiomeLayers {
 		double t = this.temperature[layer.ordinal()].generateNoiseOctaves(x / 32.0, z / 32.0);
 		double h = this.humidity[layer.ordinal()].generateNoiseOctaves(x / 32.0, z / 32.0);
 		return CypressBiomeKind.nearest(t, h);
+	}
+
+	public CypressBiomeKind surfaceColumn(int x, int z) {
+		long key = ((long) x << 32) ^ (z & 0xFFFFFFFFL);
+		int slot = (int) ((key * 0x9E3779B97F4A7C15L) >>> 52) & (COLUMN_CACHE_SIZE - 1);
+		ColumnCache cache = this.columnCache.get();
+		byte stored = cache.values[slot];
+		if (stored != 0 && cache.keys[slot] == key) {
+			return CypressBiomeKind.byOrdinal(stored - 1);
+		}
+		CypressBiomeKind kind = this.classify(x, z, CypressBiomeKind.Layer.SURFACE);
+		cache.keys[slot] = key;
+		cache.values[slot] = (byte) (kind.ordinal() + 1);
+		return kind;
+	}
+
+	private static final class ColumnCache {
+		final long[] keys = new long[COLUMN_CACHE_SIZE];
+		final byte[] values = new byte[COLUMN_CACHE_SIZE];
 	}
 
 	public CypressBiomeKind chunkWinner(int chunkX, int chunkZ, CypressBiomeKind.Layer layer) {

@@ -17,7 +17,8 @@ public abstract class ScreenGameOverCypressMixin {
 	@Redirect(method = "render(IIF)V", at = @At(value = "INVOKE",
 		target = "Lnet/minecraft/core/lang/I18n;translateKey(Ljava/lang/String;)Ljava/lang/String;"))
 	private String alphaver$shattered(I18n i18n, String key) {
-		if (CypressFrail.active(Minecraft.getMinecraft().currentWorld)) {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (CypressFrail.active(mc.currentWorld, mc.thePlayer)) {
 			return i18n.translateKey("gui.alphaver.game_over.shattered");
 		}
 		return i18n.translateKey(key);

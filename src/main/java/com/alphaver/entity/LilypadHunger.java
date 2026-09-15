@@ -30,7 +30,7 @@ public final class LilypadHunger {
 	public static boolean appliesTo(@NotNull Player player) {
 		World world = player.world;
 		return AVConfig.LILYPAD_HUNGER && world != null && AVWorlds.isAlphaVer(world) && !AVWorlds.isMinigame(world)
-			&& !CypressFrail.active(world) && !player.getGamemode().hasInvulnerablePlayer() && !AVInventoryStash.holding(player);
+			&& !CypressFrail.active(world, player) && !player.getGamemode().hasInvulnerablePlayer() && !AVInventoryStash.holding(player);
 	}
 
 	public static int stageOf(int hunger) {

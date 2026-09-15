@@ -10,6 +10,9 @@
     "BlockLogicRetroDropsMixin",
     "BlockMinigameMixin",
     "ChunkDecoratorOverworldMixin",
+    "CommandFillInvitesMixin",
+    "CommandGiveInvitesMixin",
+    "CommandSetBlockInvitesMixin",
     "CommandTeleportDimensionNameMixin",
     "ContainerCraftingAccessor",
     "EntityItemFountainMixin",
@@ -34,6 +37,7 @@
     "PlayerMinigameMixin",
     "PlayerMiningCypressMixin",
     "PlayerMirrorSpawnMixin",
+    "PlayerPickBlockInvitesMixin",
     "PlayerSelectedArtMixin",
     "PlayerStashMixin",
     "PlayerTravelMixin",
@@ -43,7 +47,8 @@
     "SpawnerMobsForeignMobsMixin",
     "SpawnerMobsHubMixin",
     "WeatherCypressMixin",
-    "WorldForeignMobsMixin"
+    "WorldForeignMobsMixin",
+    "WorldGlassSoundCypressMixin"
   ],
   "client": [
     "client.AtlasStitcherCypressFilterMixin",
@@ -66,6 +71,7 @@
     "client.LightmapHelperColoredLightMixin",
     "client.LightmapHelperFlatLightingMixin",
     "client.LoadingScreenRendererBackgroundMixin",
+    "client.MinecraftCreateWorldCypressMixin",
     "client.MinecraftMinigameKeysMixin",
     "client.MinecraftRespawnDoorMixin",
     "client.MinecraftStartGameMixin",
@@ -74,6 +80,7 @@
     "client.MusicCategoryManagerMixin",
     "client.MusicToastIconMixin",
     "client.OptionsPagesControlsMixin",
+    "client.PacketHandlerClientGameRuleMixin",
     "client.PacketHandlerClientLoginMixin",
     "client.PlayerInputDashMixin",
     "client.PlayerLocalCypressMixin",
@@ -95,7 +102,10 @@
   "server": [
     "MinecraftServerDimensionMixin",
     "server.PacketHandlerLoginHandshakeMixin",
+    "server.PacketHandlerServerRespawnHomeMixin",
+    "server.PlayerListCypressStartMixin",
     "server.PlayerListMirrorRespawnMixin",
+    "server.PlayerServerDimensionMixin",
     "server.PlayerServerWindowAccessor",
     "server.ServerCommandSourceTravelMixin"
   ],

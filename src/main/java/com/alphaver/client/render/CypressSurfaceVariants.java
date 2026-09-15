@@ -29,7 +29,8 @@ public final class CypressSurfaceVariants {
 		if (world == null || !(world.getBiomeProvider() instanceof BiomeProviderCypress provider)) {
 			return 0;
 		}
-		CypressBiomeKind kind = provider.layers().classify(x, z, CypressBiomeKind.Layer.SURFACE);
+
+		CypressBiomeKind kind = provider.layers().surfaceColumn(x, z);
 		return kind == null ? 0 : kind.variant;
 	}
 }
