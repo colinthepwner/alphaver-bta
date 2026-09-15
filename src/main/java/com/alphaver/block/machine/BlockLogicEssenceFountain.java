@@ -43,9 +43,13 @@ public class BlockLogicEssenceFountain extends BlockLogic {
 				Items.AMMO_SNOWBALL.id, false);
 		}
 		if (rand.nextInt(3) == 0) {
-			int top = y + fountain.count;
+
+			int top = Math.min(128, y + fountain.count);
 			for (int cellY = y + 1; cellY < top; cellY++) {
-				if (world.isAirBlock(x, cellY, z) && rand.nextInt(6) == 0) {
+				if (!world.isAirBlock(x, cellY, z)) {
+					break;
+				}
+				if (rand.nextInt(6) == 0) {
 					world.spawnParticle("splash", x + rand.nextFloat(), cellY + rand.nextFloat(), z + rand.nextFloat(),
 						0.0, 0.0, 0.0, world.dimension.id, false);
 				}

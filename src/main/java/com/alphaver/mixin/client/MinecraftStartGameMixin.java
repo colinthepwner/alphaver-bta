@@ -11,6 +11,7 @@ import com.alphaver.client.gui.HudComponentMinigamePlayers;
 import com.alphaver.client.gui.HudComponentMinigamePrompt;
 import com.alphaver.client.gui.HudComponentZombies;
 import com.alphaver.client.gui.HudComponentZombiesAmmo;
+import com.alphaver.client.gui.HudComponentZombiesWave;
 import com.alphaver.client.gui.HudComponentLoreToast;
 import com.alphaver.client.gui.HudComponentPaintingTitle;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,7 @@ public abstract class MinecraftStartGameMixin {
 		HudComponentMinigamePrompt.register();
 		HudComponentFreerunTimer.register();
 		HudComponentMinigamePlayers.register();
+		HudComponentZombiesWave.register();
 		AlphaVer.LOGGER.info("Registered AlphaVer's key bindings and HUD components.");
 	}
 }

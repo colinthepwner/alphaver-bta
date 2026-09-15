@@ -37,6 +37,7 @@ public class MessageMinigameState implements NetworkMessage {
 		packet.writeByte(s.checkpoint);
 		packet.writeByte(s.checkpoints);
 		packet.writeInt(s.leaveHintSerial);
+		packet.writeInt(s.nextWaveTicks);
 		int mates = Math.min(s.mates.size(), MinigameHudState.MAX_MATES);
 		packet.writeByte(mates);
 		for (int i = 0; i < mates; i++) {
@@ -68,6 +69,7 @@ public class MessageMinigameState implements NetworkMessage {
 		s.checkpoint = packet.readByte();
 		s.checkpoints = packet.readByte();
 		s.leaveHintSerial = packet.readInt();
+		s.nextWaveTicks = packet.readInt();
 		int count = Math.max(0, Math.min(packet.readByte(), MinigameHudState.MAX_MATES));
 		List<MinigameHudState.Mate> mates = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {

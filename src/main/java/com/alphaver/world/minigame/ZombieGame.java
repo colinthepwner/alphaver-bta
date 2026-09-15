@@ -37,7 +37,8 @@ final class ZombieGame {
 	static final int POINTS_START = 1000;
 	static final int POINTS_PER_KILL = 120;
 	private static final int FIRST_WAVE = 12;
-	private static final int WAVE_PAUSE = 80;
+
+	private static final int WAVE_PAUSE = 200;
 	private static final int MAX_ALIVE = 80;
 	private static final double SPAWN_RANGE = 48.0;
 	private static final int AMMO = 200;
@@ -641,6 +642,7 @@ final class ZombieGame {
 		ZombiePlayer zombiePlayer = this.players.get(key);
 		hud.wave = this.wave;
 		hud.zombiesLeft = Math.max(0, this.waveSize - this.killed);
+		hud.nextWaveTicks = this.nextWaveTicks();
 		if (zombiePlayer != null) {
 			hud.points = zombiePlayer.points;
 			hud.perks = zombiePlayer.perks;
@@ -662,5 +664,10 @@ final class ZombieGame {
 
 	int survivedWaves() {
 		return this.wave - 1;
+	}
+
+	int nextWaveTicks() {
+		long waited = this.ticks - this.lastWaveEnd;
+		return this.spawned == 0 && waited <= WAVE_PAUSE ? (int) (WAVE_PAUSE + 1 - waited) : 0;
 	}
 }

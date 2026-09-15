@@ -5,6 +5,7 @@ import com.alphaver.asset.AVAssetSidecar;
 import com.alphaver.client.gui.CypressFrailHud;
 import com.alphaver.client.gui.HudComponentLilypadHunger;
 import com.alphaver.client.gui.HudComponentZombies;
+import com.alphaver.client.render.AVParticles;
 import com.alphaver.client.render.AVPaintingTextures;
 import net.minecraft.client.render.texturepack.TexturePackList;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,6 +36,8 @@ public abstract class TexturePackListSidecarMixin {
 			CypressFrailHud.register();
 			HudComponentLilypadHunger.registerIcons();
 			HudComponentZombies.registerIcons();
+
+			AVParticles.registerTextures();
 		} catch (Throwable t) {
 
 			AlphaVer.LOGGER.error("Asset sidecar failed; AlphaVer will run without Cypress's art.", t);

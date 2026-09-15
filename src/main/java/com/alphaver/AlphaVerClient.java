@@ -11,6 +11,7 @@ import com.alphaver.client.render.AVBlockColors;
 import com.alphaver.client.render.AVBlockModels;
 import com.alphaver.client.render.AVEntityRenderers;
 import com.alphaver.client.render.AVItemModels;
+import com.alphaver.client.render.AVParticles;
 import com.alphaver.client.render.ParticleGreenstoneDust;
 import com.alphaver.client.render.WorldTypeFXCypress;
 import com.alphaver.client.render.WorldTypeFXHub;
@@ -55,5 +56,7 @@ public class AlphaVerClient implements ClientModInitializer {
 		WorldTypeFXHub.register();
 
 		ParticleGreenstoneDust.register();
+
+		AVParticles.register();
 	}
 }

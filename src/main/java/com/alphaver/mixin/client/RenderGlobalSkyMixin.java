@@ -8,6 +8,7 @@ import net.minecraft.client.render.RenderGlobal;
 import net.minecraft.client.world.WorldClient;
 import net.minecraft.core.world.weather.Weather;
 import org.joml.Matrix4f;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +23,9 @@ public abstract class RenderGlobalSkyMixin {
 
 	@Shadow
 	private WorldClient world;
+
+	@Shadow
+	private double rainbowBrightness;
 
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
 	private void alphaver$hubSky(float partialTick, CallbackInfo ci) {
@@ -55,6 +59,19 @@ public abstract class RenderGlobalSkyMixin {
 		target = "Lnet/minecraft/client/world/WorldClient;getCurrentWeather()Lnet/minecraft/core/world/weather/Weather;"))
 	private Weather alphaver$noWeatherFade(WorldClient world) {
 		return AVWorlds.isAlphaVer(world) ? null : world.getCurrentWeather();
+	}
+
+	@Inject(method = "renderSky", at = @At("HEAD"))
+	private void alphaver$noRainbowCarriedIn(float partialTick, CallbackInfo ci) {
+		if (AVWorlds.isAlphaVer(this.world)) {
+			this.rainbowBrightness = 0.0;
+		}
+	}
+
+	@Redirect(method = "renderSky", at = @At(value = "FIELD", target = "Lnet/minecraft/client/world/WorldClient;rainbowTicks:I",
+		opcode = Opcodes.GETFIELD))
+	private int alphaver$noRainbow(WorldClient world) {
+		return AVWorlds.isAlphaVer(world) ? 0 : world.rainbowTicks;
 	}
 
 	@Inject(method = "renderSky", at = @At("TAIL"))

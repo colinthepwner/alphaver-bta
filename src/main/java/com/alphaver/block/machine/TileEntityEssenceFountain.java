@@ -84,8 +84,9 @@ public class TileEntityEssenceFountain extends TileEntity {
 		this.count--;
 		if (this.count == 0) {
 			for (int i = 0; i < 12; i++) {
+
 				this.worldObj.spawnParticle("smoke", this.tilePos.x + this.random.nextFloat(), this.tilePos.y + 0.4,
-					this.tilePos.z + this.random.nextFloat(), 0.0, 0.1, 0.0, 0, true);
+					this.tilePos.z + this.random.nextFloat(), 0.0, 0.0, 0.0, 0, true);
 			}
 		}
 		if (wasFull || this.count == 0) {

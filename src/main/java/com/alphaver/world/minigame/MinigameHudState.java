@@ -31,6 +31,8 @@ public final class MinigameHudState {
 	@NotNull
 	public String prompt = "";
 
+	public int nextWaveTicks;
+
 	public boolean timerRunning;
 
 	public int timerTicks;
@@ -80,6 +82,14 @@ public final class MinigameHudState {
 		}
 		long elapsed = Math.max(0L, System.nanoTime() - this.receivedAtNanos) / 50_000_000L;
 		return (int) Math.min(Integer.MAX_VALUE, this.timerTicks + elapsed);
+	}
+
+	public int displayNextWaveTicks() {
+		if (this.nextWaveTicks <= 0 || !this.extrapolate) {
+			return Math.max(0, this.nextWaveTicks);
+		}
+		long elapsed = Math.max(0L, System.nanoTime() - this.receivedAtNanos) / 50_000_000L;
+		return (int) Math.max(0L, this.nextWaveTicks - elapsed);
 	}
 
 	public boolean differsFrom(@NotNull MinigameHudState other) {

@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class BlockLogicFreezer extends BlockLogicRotatable {
 
-	private static final String SNOW_PARTICLE = "snowshovel";
+	public static final String SNOW_PARTICLE = "alphaver:snowflake";
 
 	private final boolean working;
 
@@ -78,11 +78,13 @@ public class BlockLogicFreezer extends BlockLogicRotatable {
 		double z = tilePos.z() + 0.5;
 		double out = 0.52;
 		double along = rand.nextFloat() * 0.6F - 0.3F;
+
+		int flake = rand.nextInt(3) + 1;
 		switch (getDirectionFromMeta(world.getBlockData(tilePos))) {
-			case WEST -> world.spawnParticle(SNOW_PARTICLE, x - out, y, z + along, 0.0, -0.01, 0.0, 0, false);
-			case EAST -> world.spawnParticle(SNOW_PARTICLE, x + out, y, z + along, 0.0, -0.01, 0.0, 0, false);
-			case NORTH -> world.spawnParticle(SNOW_PARTICLE, x + along, y, z - out, 0.0, -0.01, 0.0, 0, false);
-			case SOUTH -> world.spawnParticle(SNOW_PARTICLE, x + along, y, z + out, 0.0, -0.01, 0.0, 0, false);
+			case WEST -> world.spawnParticle(SNOW_PARTICLE, x - out, y, z + along, 0.0, -0.01, 0.0, flake, false);
+			case EAST -> world.spawnParticle(SNOW_PARTICLE, x + out, y, z + along, 0.0, -0.01, 0.0, flake, false);
+			case NORTH -> world.spawnParticle(SNOW_PARTICLE, x + along, y, z - out, 0.0, -0.01, 0.0, flake, false);
+			case SOUTH -> world.spawnParticle(SNOW_PARTICLE, x + along, y, z + out, 0.0, -0.01, 0.0, flake, false);
 			default -> {
 			}
 		}

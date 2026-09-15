@@ -14,6 +14,7 @@
     "ContainerCraftingAccessor",
     "EntityItemFountainMixin",
     "ItemPaintingCypressMixin",
+    "ItemStackCypressDurabilityMixin",
     "MenuCraftingAccessor",
     "MenuCraftingMixin",
     "MobCreeperRecordsMixin",
@@ -24,6 +25,7 @@
     "MobPathfinderMinigameMixin",
     "MobSheepDeathWoolMixin",
     "MobSheepPunchMixin",
+    "PlayerCypressArmorWearMixin",
     "PlayerCypressEventsMixin",
     "PlayerFlamebergeMixin",
     "PlayerFrailMixin",
@@ -44,6 +46,7 @@
     "WorldForeignMobsMixin"
   ],
   "client": [
+    "client.AtlasStitcherCypressFilterMixin",
     "client.AvailableTexturePackListHideMixin",
     "client.BlockColorDispatcherLookMixin",
     "client.BlockColorWaterMixin",
@@ -57,6 +60,7 @@
     "client.GuiContainerLabelMixin",
     "client.HudComponentHealthBarFrailMixin",
     "client.HudIngamePortalOverlayMixin",
+    "client.HudIngameSunglassesMixin",
     "client.I18nLookTextMixin",
     "client.LightingCacheFlatLightingMixin",
     "client.LightmapHelperColoredLightMixin",
@@ -81,7 +85,9 @@
     "client.ScreenTexturedBackgroundMixin",
     "client.SelectedTexturePackButtonLockMixin",
     "client.SelectedTexturePackListHideMixin",
+    "client.ShadersRendererCypressShaderMixin",
     "client.SoundEngineMusicMixin",
+    "client.TextureCypressFilterMixin",
     "client.TexturePackListLockMixin",
     "client.TexturePackListSidecarMixin",
     "client.WorldClientSkyColorMixin"

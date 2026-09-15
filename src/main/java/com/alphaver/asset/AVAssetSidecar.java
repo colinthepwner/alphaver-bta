@@ -56,7 +56,7 @@ public final class AVAssetSidecar {
 
 	private static final String STAMP = "sidecar-source.txt";
 
-	private static final int SIDECAR_REVISION = 16;
+	private static final int SIDECAR_REVISION = 18;
 
 	private static final String[] SIGNATURE = {
 		"ext1605/shaders/default/final.fsh",

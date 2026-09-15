@@ -1,5 +1,6 @@
 package com.alphaver.client.render;
 
+import com.alphaver.AVConfig;
 import com.alphaver.world.biome.BiomeProviderCypress;
 import com.alphaver.world.gen.CypressBiomeKind;
 import com.alphaver.world.type.WorldTypeCypress;
@@ -18,6 +19,9 @@ public final class CypressSurfaceVariants {
 	public static final int HIGHWOOD = 2;
 
 	public static int at(WorldSource source, int x, int z) {
+		if (AVConfig.VISUALS_1604) {
+			return 0;
+		}
 		if (source == null || source.getWorldType() != WorldTypeCypress.CYPRESS) {
 			return 0;
 		}

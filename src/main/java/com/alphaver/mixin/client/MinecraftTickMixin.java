@@ -2,6 +2,7 @@ package com.alphaver.mixin.client;
 
 import com.alphaver.client.render.AVColoredLight;
 import com.alphaver.client.render.AVLookController;
+import com.alphaver.client.render.CypressAmbientEffects;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,5 +17,6 @@ public abstract class MinecraftTickMixin {
 		Minecraft mc = (Minecraft) (Object) this;
 		AVLookController.tick(mc);
 		AVColoredLight.tick(mc);
+		CypressAmbientEffects.tick(mc);
 	}
 }

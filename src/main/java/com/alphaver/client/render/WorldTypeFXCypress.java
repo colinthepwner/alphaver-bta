@@ -4,6 +4,8 @@ import com.alphaver.AlphaVer;
 import com.alphaver.world.type.WorldTypeCypress;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.option.GameSettings;
+import net.minecraft.client.option.enums.CloudQuality;
 import net.minecraft.client.render.worldtype.WorldTypeFXDispatcher;
 import net.minecraft.client.render.worldtype.WorldTypeFXOverworld;
 import net.minecraft.core.util.helper.MathHelper;
@@ -21,9 +23,18 @@ public class WorldTypeFXCypress extends WorldTypeFXOverworld {
 	private static final float FOG_G = 0xD8 / 255.0F;
 	private static final float FOG_B = 0xFF / 255.0F;
 
+	private static final float FANCY_CLOUD_HEIGHT = 108.0F;
+
+	private static final float FAST_CLOUD_HEIGHT = 120.0F;
+
 	public WorldTypeFXCypress(WorldType worldType) {
 		super(worldType);
 		this.setHasAurora(false);
+	}
+
+	@Override
+	public float getCloudHeight(@NotNull World world) {
+		return GameSettings.CLOUD_QUALITY.value == CloudQuality.FANCY ? FANCY_CLOUD_HEIGHT : FAST_CLOUD_HEIGHT;
 	}
 
 	@Nullable
