@@ -4,6 +4,7 @@
   "package": "com.alphaver.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ArgumentTypeGameModeCypressMixin",
     "BlockLogicFireCypressMixin",
     "BlockLogicLeavesBaseCypressMixin",
     "BlockLogicObsidianPickaxeMixin",
@@ -12,6 +13,7 @@
     "BlockMinigameMixin",
     "ChunkDecoratorOverworldMixin",
     "CommandFillInvitesMixin",
+    "CommandGameModeCypressMixin",
     "CommandGiveInvitesMixin",
     "CommandSetBlockInvitesMixin",
     "CommandTeleportDimensionNameMixin",
@@ -56,6 +58,7 @@
     "client.AvailableTexturePackListHideMixin",
     "client.BlockColorDispatcherLookMixin",
     "client.BlockColorWaterMixin",
+    "client.BooleanGameRuleComponentAccessor",
     "client.ClientCommandSourceTravelMixin",
     "client.DispatcherAccessor",
     "client.DynamicTextureWaterFlowMixin",
@@ -83,10 +86,12 @@
     "client.OptionsPagesControlsMixin",
     "client.PacketHandlerClientGameRuleMixin",
     "client.PacketHandlerClientLoginMixin",
+    "client.PlayerControllerDoorGuardMixin",
     "client.PlayerInputDashMixin",
     "client.PlayerLocalCypressMixin",
     "client.RenderBlocksFlatLightingMixin",
     "client.RenderGlobalSkyMixin",
+    "client.ScreenCreateWorldCypressModesMixin",
     "client.ScreenGameOverCypressMixin",
     "client.ScreenMainMenuSettingsMixin",
     "client.ScreenPaintingPickerCypressMixin",
@@ -109,7 +114,8 @@
     "server.PlayerListMirrorRespawnMixin",
     "server.PlayerServerDimensionMixin",
     "server.PlayerServerWindowAccessor",
-    "server.ServerCommandSourceTravelMixin"
+    "server.ServerCommandSourceTravelMixin",
+    "server.ServerPlayerControllerDoorGuardMixin"
   ],
   "injectors": {
     "defaultRequire": 1

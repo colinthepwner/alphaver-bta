@@ -791,20 +791,25 @@ public final class AVBlocks {
 			.setBlockSound(BlockSounds.METAL);
 
 		HUB_DOOR = door.clone()
+			.setTags(BlockTags.MINEABLE_BY_PICKAXE)
 			.build("door.hub", BASE_ID + 256,
 				b -> new BlockLogicAlphaVerDoor(b, AVDimensions.HUB, BlockLogicAlphaVerDoor.Half.BOTH));
 		CYPRESS_DOOR_LOWER = door.clone()
 			.setBlockSound(BlockSounds.WOOD)
+			.setTags(BlockTags.MINEABLE_BY_AXE)
 			.build("door.cypress.lower", BASE_ID + 257,
 				b -> new BlockLogicAlphaVerDoor(b, AVDimensions.CYPRESS, BlockLogicAlphaVerDoor.Half.LOWER));
 		CYPRESS_DOOR_UPPER = door.clone()
 			.setBlockSound(BlockSounds.WOOD)
+			.setTags(BlockTags.MINEABLE_BY_AXE)
 			.build("door.cypress.upper", BASE_ID + 258,
 				b -> new BlockLogicAlphaVerDoor(b, AVDimensions.CYPRESS, BlockLogicAlphaVerDoor.Half.UPPER));
 
 		ZOMBIES_DOOR = door.clone()
+			.setTags(BlockTags.MINEABLE_BY_PICKAXE)
 			.build("door.zombies", BASE_ID + 265, b -> new BlockLogicMinigameDoor(b, MinigameKind.ZOMBIES));
 		FREERUN_DOOR = door.clone()
+			.setTags(BlockTags.MINEABLE_BY_PICKAXE)
 			.build("door.freerun", BASE_ID + 266, b -> new BlockLogicMinigameDoor(b, MinigameKind.FREERUN));
 
 		AlphaVer.LOGGER.info("Registered the Hub, Cypress and minigame doors.");

@@ -29,8 +29,6 @@ public abstract class PlayerStashMixin implements AVStashData {
 	private static final String KEY_HEALTH = "AlphaVerStashHealth";
 	@Unique
 	private static final String KEY_GAMEMODE = "AlphaVerStashGamemode";
-	@Unique
-	private static final int FULL_HEALTH = 20;
 
 	@Unique
 	private ListTag alphaver$stash;
@@ -43,7 +41,7 @@ public abstract class PlayerStashMixin implements AVStashData {
 	@Unique
 	private int alphaver$stashZ;
 	@Unique
-	private int alphaver$stashHealth = FULL_HEALTH;
+	private int alphaver$stashHealth = AVInventoryStash.HEALTH_FULL;
 	@Unique
 	@Nullable
 	private String alphaver$stashGamemode;
@@ -129,7 +127,7 @@ public abstract class PlayerStashMixin implements AVStashData {
 			this.alphaver$stashY = tag.getInteger(KEY_Y);
 			this.alphaver$stashZ = tag.getInteger(KEY_Z);
 
-			this.alphaver$stashHealth = tag.containsKey(KEY_HEALTH) ? tag.getInteger(KEY_HEALTH) : FULL_HEALTH;
+			this.alphaver$stashHealth = tag.containsKey(KEY_HEALTH) ? tag.getInteger(KEY_HEALTH) : AVInventoryStash.HEALTH_FULL;
 
 			this.alphaver$stashGamemode = tag.containsKey(KEY_GAMEMODE) ? tag.getString(KEY_GAMEMODE) : null;
 		} else {

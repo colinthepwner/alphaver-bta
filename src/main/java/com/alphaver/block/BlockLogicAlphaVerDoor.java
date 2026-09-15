@@ -1,19 +1,27 @@
 package com.alphaver.block;
 
+import com.alphaver.AlphaVer;
 import com.alphaver.world.AVDimensions;
+import com.alphaver.world.AVWorlds;
 import com.alphaver.world.travel.AVTravel;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogicPortal;
 import net.minecraft.core.block.Blocks;
+import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.util.helper.DyeColor;
+import net.minecraft.core.util.helper.Side;
 import net.minecraft.core.world.Dimension;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.WorldSource;
 import net.minecraft.core.world.pos.TilePos;
 import net.minecraft.core.world.pos.TilePosc;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.primitives.AABBd;
 import org.joml.primitives.AABBdc;
 
@@ -26,7 +34,15 @@ public class BlockLogicAlphaVerDoor extends BlockLogicPortal {
 
 	public static final int FAR = 4;
 
+	public static final String SMOKE_PARTICLE = AlphaVer.MOD_ID + ":door_smoke";
+
 	private static final double THICKNESS = 3.0 / 16.0;
+
+	private static final float IRON_DOOR_HARDNESS = 5.0F;
+
+	private static final float WOODEN_DOOR_HARDNESS = 3.0F;
+
+	private static final int SMOKE_PUFFS = 20;
 
 	public enum Half {
 
@@ -41,6 +57,18 @@ public class BlockLogicAlphaVerDoor extends BlockLogicPortal {
 
 		super(block, target, Blocks.STONE, Blocks.AIR);
 		this.half = half;
+	}
+
+	public static boolean breakableIn(@Nullable World world) {
+		return world != null && !AVWorlds.isHub(world) && !AVWorlds.isMinigame(world);
+	}
+
+	public static boolean protectedAt(@NotNull World world, @NotNull TilePosc tilePos) {
+		if (breakableIn(world)) {
+			return false;
+		}
+		Block<?> block = world.getBlockType(tilePos);
+		return block != null && block.getLogic() instanceof BlockLogicAlphaVerDoor;
 	}
 
 	@NotNull
@@ -67,6 +95,47 @@ public class BlockLogicAlphaVerDoor extends BlockLogicPortal {
 	@Override
 	public boolean isSolidRender() {
 		return false;
+	}
+
+	@Override
+	public float getStrength(@NotNull World world, @NotNull TilePosc tilePos, @NotNull Side side, @NotNull Player player) {
+		if (!breakableIn(world)) {
+			return 0.0F;
+		}
+		boolean iron = this.half == Half.BOTH;
+		float hardness = iron ? IRON_DOOR_HARDNESS : WOODEN_DOOR_HARDNESS;
+		ItemStack held = player.inventory.getCurrentItem();
+		boolean properTool = !iron || held != null && held.canHarvestBlock(player, this.block);
+		return properTool
+			? player.getCurrentPlayerStrVsBlock(this.block) / hardness / 30.0F
+			: 1.0F / hardness / 100.0F;
+	}
+
+	@Override
+	public ItemStack[] getBreakResult(@NotNull World world, @NotNull EnumDropCause dropCause, int data, @Nullable TileEntity tileEntity) {
+		return null;
+	}
+
+	@Override
+	public ItemStack[] getBreakResult(
+		@NotNull World world, @NotNull EnumDropCause dropCause, @NotNull TilePosc tilePos, int data, @Nullable TileEntity tileEntity
+	) {
+		return null;
+	}
+
+	@Override
+	public void onDestroyedByPlayer(
+		@NotNull World world, @NotNull TilePosc tilePos, @NotNull Side side, int data, @NotNull Player player, @Nullable Item item
+	) {
+		Random rand = world.rand;
+		int lowerY = this.isUpper(data) ? tilePos.y() - 1 : tilePos.y();
+		for (int puff = 0; puff < SMOKE_PUFFS; puff++) {
+
+			world.spawnParticle(SMOKE_PARTICLE,
+				tilePos.x() + rand.nextDouble(), lowerY + rand.nextDouble() * 2.0, tilePos.z() + rand.nextDouble(),
+				(rand.nextDouble() - 0.5) * 0.04, 0.01 + rand.nextDouble() * 0.02, (rand.nextDouble() - 0.5) * 0.04,
+				puff & 1, true);
+		}
 	}
 
 	@Override

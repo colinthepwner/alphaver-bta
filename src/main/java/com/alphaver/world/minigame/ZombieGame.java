@@ -43,7 +43,6 @@ final class ZombieGame {
 	private static final double SPAWN_RANGE = 48.0;
 	private static final int AMMO = 200;
 	static final int DOWNED_TICKS = MinigameHudState.REVIVE_TICKS;
-	private static final int FULL_HEALTH = 20;
 	private static final int REGEN_AFTER = 120;
 	private static final int REGEN_EVERY = 30;
 	private static final int DOOR_FLOOD_LIMIT = 1024;
@@ -62,7 +61,8 @@ final class ZombieGame {
 		double downedY;
 		double downedZ;
 		int regen;
-		int lastHealth = FULL_HEALTH;
+
+		int lastHealth;
 		boolean hasFocus;
 		int focusX;
 		int focusY;
@@ -70,6 +70,7 @@ final class ZombieGame {
 
 		ZombiePlayer(Player player) {
 			this.player = player;
+			this.lastHealth = player.getMaxHealth();
 		}
 	}
 
@@ -122,7 +123,7 @@ final class ZombieGame {
 		}
 		game.players.put(key, zombiePlayer);
 		giveLoadout(player);
-		player.setHealthRaw(FULL_HEALTH);
+		player.setHealthRaw(player.getMaxHealth());
 		double[] spawn = game.data.playerSpawn(world);
 		AVMinigames.teleport(player, spawn[0], spawn[1], spawn[2], game.data.spawnYaw());
 		return game;
@@ -371,8 +372,8 @@ final class ZombieGame {
 				AVMinigames.teleport(player, zombiePlayer.downedX, zombiePlayer.downedY, zombiePlayer.downedZ, player.yRot);
 			}
 			if (zombiePlayer.downedTicks < 0) {
-				player.setHealthRaw(FULL_HEALTH);
-				zombiePlayer.lastHealth = FULL_HEALTH;
+				player.setHealthRaw(player.getMaxHealth());
+				zombiePlayer.lastHealth = player.getMaxHealth();
 				zombiePlayer.regen = 0;
 			} else if (player.getHealth() != 1) {
 				player.setHealthRaw(1);
@@ -388,7 +389,7 @@ final class ZombieGame {
 		zombiePlayer.regen++;
 		if (zombiePlayer.regen > REGEN_AFTER) {
 			zombiePlayer.regen -= REGEN_EVERY;
-			if (health < FULL_HEALTH) {
+			if (health < player.getMaxHealth()) {
 				player.heal(1);
 			}
 		}

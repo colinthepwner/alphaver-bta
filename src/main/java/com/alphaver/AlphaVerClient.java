@@ -1,6 +1,7 @@
 package com.alphaver;
 
 import com.alphaver.block.machine.AVScreens;
+import com.alphaver.client.AVDoorFinds;
 import com.alphaver.client.MinigameClient;
 import com.alphaver.client.gui.CypressLoreToasts;
 import com.alphaver.client.gui.ScreenEssenceCloner;
@@ -15,6 +16,7 @@ import com.alphaver.client.render.AVParticles;
 import com.alphaver.client.render.ParticleGreenstoneDust;
 import com.alphaver.client.render.WorldTypeFXCypress;
 import com.alphaver.client.render.WorldTypeFXHub;
+import com.alphaver.entity.AVGamemodes;
 import com.alphaver.item.AVItemHooks;
 import net.fabricmc.api.ClientModInitializer;
 import org.lwjgl.input.Keyboard;
@@ -48,6 +50,8 @@ public class AlphaVerClient implements ClientModInitializer {
 		AVItemHooks.setRightShift(() -> Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
 
 		MinigameClient.install();
+
+		AVGamemodes.setFoundInAnyWorld(() -> AVDoorFinds.anyWorld(false));
 	}
 
 	private void afterClientStart() {

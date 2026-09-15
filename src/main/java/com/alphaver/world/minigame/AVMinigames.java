@@ -51,7 +51,6 @@ public final class AVMinigames {
 	private static final int DOOR_CHECK_INTERVAL = 100;
 
 	private static final int TRIP_GRACE_TICKS = 100;
-	private static final int FULL_HEALTH = 20;
 	private static final int FULL_AIR = 300;
 
 	private static final Map<String, Visitor> VISITORS = new HashMap<>();
@@ -283,7 +282,8 @@ public final class AVMinigames {
 			return;
 		}
 		if (player.isAlive()) {
-			player.setHealthRaw(Math.max(1, Math.min(FULL_HEALTH, health)));
+
+			player.setHealthRaw(Math.max(1, Math.min(player.getMaxHealth(), health)));
 		}
 		player.fallDistance = 0.0F;
 		if (message != null) {
@@ -292,7 +292,7 @@ public final class AVMinigames {
 	}
 
 	private static void heal(Player player) {
-		player.setHealthRaw(FULL_HEALTH);
+		player.setHealthRaw(player.getMaxHealth());
 		player.remainingFireTicks = 0;
 		player.airSupply = FULL_AIR;
 		player.fallDistance = 0.0F;

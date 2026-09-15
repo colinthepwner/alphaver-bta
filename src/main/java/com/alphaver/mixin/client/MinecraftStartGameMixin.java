@@ -14,9 +14,7 @@ import com.alphaver.client.gui.HudComponentZombiesAmmo;
 import com.alphaver.client.gui.HudComponentZombiesWave;
 import com.alphaver.client.gui.HudComponentLoreToast;
 import com.alphaver.client.gui.HudComponentPaintingTitle;
-import com.alphaver.entity.AVGamemodes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenCreateWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -47,11 +45,6 @@ public abstract class MinecraftStartGameMixin {
 		HudComponentFreerunTimer.register();
 		HudComponentMinigamePlayers.register();
 		HudComponentZombiesWave.register();
-
-		if (AVGamemodes.CYPRESS_SURVIVAL != null && !ScreenCreateWorld.GAMEMODES.contains(AVGamemodes.CYPRESS_SURVIVAL)) {
-			ScreenCreateWorld.GAMEMODES.add(AVGamemodes.CYPRESS_SURVIVAL);
-			ScreenCreateWorld.GAMEMODES.add(AVGamemodes.CYPRESS_FRAIL);
-		}
-		AlphaVer.LOGGER.info("Registered AlphaVer's key bindings, HUD components and Create World gamemodes.");
+		AlphaVer.LOGGER.info("Registered AlphaVer's key bindings and HUD components.");
 	}
 }

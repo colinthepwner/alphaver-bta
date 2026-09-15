@@ -1,6 +1,7 @@
 package com.alphaver.client.render;
 
 import com.alphaver.AlphaVer;
+import com.alphaver.block.BlockLogicAlphaVerDoor;
 import com.alphaver.block.machine.BlockLogicFreezer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,6 +26,8 @@ public final class AVParticles {
 			TextureRegistry.hasTexture(ParticleCypressSnowflake.TEXTURE + 1)
 				? new ParticleCypressSnowflake(world, x, y, z, motionX, motionY, motionZ, data)
 				: new ParticleSnowShovel(world, x, y, z, motionX, motionY, motionZ));
+		dispatcher.addDispatch(BlockLogicAlphaVerDoor.SMOKE_PARTICLE, (world, x, y, z, motionX, motionY, motionZ, data) ->
+			new ParticleDoorSmoke(world, x, y, z, motionX, motionY, motionZ, data));
 		AlphaVer.LOGGER.info("Registered Cypress's particles.");
 	}
 

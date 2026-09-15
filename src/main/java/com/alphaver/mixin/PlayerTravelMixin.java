@@ -22,7 +22,7 @@ public abstract class PlayerTravelMixin implements AVTravelData {
 	@Unique
 	private static final String KEY_Z = "AlphaVerReturnZ";
 	@Unique
-	private static final String KEY_INVITED = "AlphaVerInvited";
+	private static final String KEY_INVITED = AVInvites.SAVE_KEY;
 	@Unique
 	private static final String KEY_HOME_X = "AlphaVerHomeX";
 	@Unique

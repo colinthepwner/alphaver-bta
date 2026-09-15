@@ -34,7 +34,8 @@ final class FreerunRun {
 		if (this.stage == MinigameStage.COURSE) {
 			FreerunCourse.build(player.world);
 		}
-		player.setHealthRaw(20);
+
+		player.setHealthRaw(player.getMaxHealth());
 		player.sendMessage(this.stage.title + ": race to the end. Tab goes back to your last checkpoint, Pause starts over, K leaves "
 			+ "(see Controls).");
 		this.reset(player);

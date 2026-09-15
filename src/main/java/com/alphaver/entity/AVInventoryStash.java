@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public final class AVInventoryStash {
 	private AVInventoryStash() {}
 
-	private static final int FULL_HEALTH = 20;
+	public static final int HEALTH_FULL = Integer.MAX_VALUE;
 
 	public static boolean take(@NotNull Player player, int dimension, int exitX, int exitY, int exitZ) {
 		AVStashData data = (AVStashData) player;
@@ -19,7 +19,7 @@ public final class AVInventoryStash {
 			return false;
 		}
 		ListTag items = player.inventory.save(new ListTag());
-		int health = Math.max(1, Math.min(FULL_HEALTH, player.getHealth()));
+		int health = Math.max(1, Math.min(player.getMaxHealth(), player.getHealth()));
 
 		String gamemode = Registries.GAMEMODES.getKey(player.getGamemode());
 		data.alphaver$setStash(items, dimension, exitX, exitY, exitZ, health, gamemode);
@@ -63,7 +63,7 @@ public final class AVInventoryStash {
 	}
 
 	public static int health(@Nullable Player player) {
-		return player instanceof AVStashData data && data.alphaver$hasStash() ? data.alphaver$stashHealth() : FULL_HEALTH;
+		return player instanceof AVStashData data && data.alphaver$hasStash() ? data.alphaver$stashHealth() : HEALTH_FULL;
 	}
 
 	public static void carryOver(@Nullable Player from, @Nullable Player to) {

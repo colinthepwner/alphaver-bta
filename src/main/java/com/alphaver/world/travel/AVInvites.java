@@ -1,8 +1,10 @@
 package com.alphaver.world.travel;
 
 import com.alphaver.AlphaVer;
+import com.alphaver.entity.AVGamemodes;
 import com.alphaver.world.AVDimensions;
 import com.mojang.brigadier.LiteralMessage;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.block.Block;
@@ -10,6 +12,8 @@ import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.lang.I18n;
+import net.minecraft.core.player.gamemode.Gamemode;
 import net.minecraft.core.world.Dimension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +24,8 @@ public final class AVInvites {
 	private AVInvites() {}
 
 	public static final String REFUSAL = "You were not invited!";
+
+	public static final String SAVE_KEY = "AlphaVerInvited";
 
 	private static final SimpleCommandExceptionType NOT_INVITED = new SimpleCommandExceptionType(new LiteralMessage(REFUSAL));
 
@@ -86,6 +92,18 @@ public final class AVInvites {
 
 	public static boolean mayPick(@NotNull Player player, @Nullable Block<?> block) {
 		return !enforced() || !isAlphaVer(block) || mayCheat(player);
+	}
+
+	public static void checkGamemode(@NotNull List<? extends Entity> targets, @Nullable Gamemode gamemode) {
+		if (!AVGamemodes.startsInCypress(gamemode)) {
+			return;
+		}
+		for (Entity target : targets) {
+			if (target instanceof Player player && !AVGamemodes.shownTo(player)) {
+				throw sneakyThrow(new CommandSyntaxException(CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownArgument(),
+					() -> I18n.getInstance().translateKey("command.argument_types.game_mode.invalid_game_mode")));
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
