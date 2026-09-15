@@ -84,7 +84,7 @@ public final class AVCypressHome {
 			return AVTravel.besideDoor(cypress, data.alphaver$homeX(), data.alphaver$homeY(), data.alphaver$homeZ());
 		}
 		TilePos spawn = cypress.getSpawnPoint();
-		int[] spot = AVTravel.cypressLanding(cypress, spawn.x, spawn.z);
+		int[] spot = AVTravel.cypressLanding(cypress, spawn.x, spawn.z, false);
 		data.alphaver$setHome(spot[0], spot[1], spot[2]);
 		return spot;
 	}

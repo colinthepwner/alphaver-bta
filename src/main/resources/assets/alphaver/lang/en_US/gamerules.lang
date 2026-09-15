@@ -1,4 +1,4 @@
 gamerule.allow_foreign_mobs_in_cypress.name=Foreign Mobs in Cypress
 gamerule.allow_foreign_mobs_in_cypress.desc=Whether mobs from other mods can spawn and live in the Cypress dimension. Turning it off removes any already there. AlphaVer's other dimensions always keep them out.
 gamerule.start_in_cypress.name=Start in Cypress
-gamerule.start_in_cypress.desc=If enabled, new players begin in the Cypress dimension beside a Hub Door and respawn there, and the Hub's Cypress Doors look like wooden doors. The Cypress gamemodes turn it on.
+gamerule.start_in_cypress.desc=If enabled, new players begin in the Cypress dimension and respawn there, and the Hub's Cypress Doors look like wooden doors. The Cypress gamemodes turn it on.

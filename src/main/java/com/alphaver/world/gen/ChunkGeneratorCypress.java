@@ -33,7 +33,7 @@ public class ChunkGeneratorCypress extends ChunkGenerator {
 
 		int sourceX = chunkX;
 		int sourceZ = chunkZ;
-		if (CypressWorldRules.isFractured()) {
+		if (CypressWorldRules.isFractured(this.seed)) {
 
 			sourceX += rand.nextInt(2000) - rand.nextInt(1000);
 			sourceZ += rand.nextInt(2000) - rand.nextInt(1000);

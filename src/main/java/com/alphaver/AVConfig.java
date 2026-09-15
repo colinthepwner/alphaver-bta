@@ -203,7 +203,7 @@ public final class AVConfig {
 
 		properties.addCategory(GENERATION_CATEGORY)
 			.addEntry("FRACTURED_WORLD",
-				"clock | always | never -- Cypress fractures chunks generated between 23:00 and 04:59.",
+				"clock | always | never -- on half the nights, Cypress fractures chunks generated between 23:00 and 04:59.",
 				FRACTURED_WORLD)
 			.addEntry("SAND_WORLD",
 				"seeded | always | never -- one Cypress world in four is sand covered.",

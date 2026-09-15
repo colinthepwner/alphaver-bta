@@ -98,6 +98,7 @@
     "client.TextureCypressFilterMixin",
     "client.TexturePackListLockMixin",
     "client.TexturePackListSidecarMixin",
+    "client.TexturePackListSkinsMixin",
     "client.WorldClientSkyColorMixin"
   ],
   "server": [

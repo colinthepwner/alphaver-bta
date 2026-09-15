@@ -84,7 +84,6 @@ public final class AVTravel {
 		int[] spot;
 		if (home != null && home.alphaver$hasHome()) {
 			spot = besideDoor(world, home.alphaver$homeX(), home.alphaver$homeY(), home.alphaver$homeZ());
-			buildDoorUnlessNear(world, spot[0], spot[1], spot[2]);
 		} else {
 			int x = MathHelper.floor(entity.x);
 			int z = MathHelper.floor(entity.z);
@@ -93,7 +92,7 @@ public final class AVTravel {
 				x = ground[0];
 				z = ground[1];
 			}
-			spot = cypressLanding(world, x, z);
+			spot = cypressLanding(world, x, z, home == null);
 		}
 		land(entity, spot[0] + 0.5, spot[1], spot[2] + 0.5, entity.yRot);
 		if (home != null) {
@@ -104,7 +103,7 @@ public final class AVTravel {
 		}
 	}
 
-	static int[] cypressLanding(World world, int x, int z) {
+	static int[] cypressLanding(World world, int x, int z, boolean door) {
 		loadAround(world, x, z);
 		int y;
 		int[] footing = findFooting(world, x, z);
@@ -119,7 +118,9 @@ public final class AVTravel {
 			world.setBlockWithNotify(x, y, z, 0);
 			world.setBlockWithNotify(x, y + 1, z, 0);
 		}
-		buildDoorUnlessNear(world, x, y, z);
+		if (door) {
+			buildDoorUnlessNear(world, x, y, z);
+		}
 		return new int[]{x, y, z};
 	}
 
